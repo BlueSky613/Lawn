@@ -43,9 +43,7 @@ dependencies:
   google_place: 
   google_maps_flutter:
   geocoding:
-  geolocator:
   flutter_rating_bar:
-  webview_flutter:
 
 
 dev_dependencies:

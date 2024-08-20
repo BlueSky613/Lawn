@@ -4,8 +4,6 @@ import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/shared/shared.dart';
 import 'package:lawnflutter/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class ProfileScreenWidget extends GetView<HomeController> {
   final FocusScopeNode _node = FocusScopeNode();

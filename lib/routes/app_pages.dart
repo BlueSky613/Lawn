@@ -22,7 +22,10 @@ class AppPages {
     ),
     GetPage(
         name: Routes.SERVICEPROVIDER,
-        binding: HomeBinding(),
+        bindings: [
+          HomeBinding(),
+          AuthBinding()
+        ],
         page: () => MapScreen()),
     GetPage(
         name: Routes.VERIFYCODE,

@@ -16,7 +16,6 @@ class ApiProvider extends BaseProvider {
   }
 
   Future<Response> editProfile(String path, ProfileRequest data) {
-    print(storage.getString('token'));
     return put(path, data.toJson(),
         headers: {"Authorization": "${storage.getString('token')}"});
   }
@@ -27,5 +26,15 @@ class ApiProvider extends BaseProvider {
 
   Future<Response> verifyCode(String path, Map<String, dynamic> data) {
     return put(path, data);
+  }
+
+  Future<Response> getService(String path) {
+    return get(path,
+        headers: {"Authorization": "${storage.getString('token')}"});
+  }
+
+  Future<Response> postBid(String path, Map<String, dynamic> data) {
+    return post(path, data,
+        headers: {"Authorization": "${storage.getString('token')}"});
   }
 }

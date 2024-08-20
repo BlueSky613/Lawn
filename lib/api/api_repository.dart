@@ -42,4 +42,14 @@ class ApiRepository {
     final res = await apiProvider.verifyCode('/user/verify', data);
     return res.body;
   }
+
+  Future<Map<String, dynamic>> getService() async {
+    final res = await apiProvider.getService('/user/all');
+    return res.body;
+  }
+
+  Future<Map<String, dynamic>> postBid(Map<String, dynamic> data) async {
+    final res = await apiProvider.postBid('/transaction/create', data);
+    return res.body;
+  }
 }

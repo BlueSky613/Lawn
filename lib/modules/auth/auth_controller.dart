@@ -8,6 +8,8 @@ import 'package:lawnflutter/api/api.dart';
 import 'package:lawnflutter/models/models.dart';
 import 'package:lawnflutter/shared/shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geocoding/geocoding.dart';
 
 class AuthController extends GetxController {
   final ApiRepository apiRepository;
@@ -20,14 +22,33 @@ class AuthController extends GetxController {
   TextEditingController registerAddressController = TextEditingController();
   TextEditingController registerPhoneController = TextEditingController();
   TextEditingController verifyCodeController = TextEditingController();
+  TextEditingController serviceAmountController = TextEditingController();
+  RxList<dynamic> serviceList = RxList<dynamic>();
+  RxList<dynamic> filteredServiceList = RxList<dynamic>();
+  RxList<String> skillsList = RxList<String>();
   var registerSecurityQuestionValue = "Your mother's maiden name".obs;
   TextEditingController registerAnswerController = TextEditingController();
   TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
   final prefs = Get.find<SharedPreferences>();
+  Set<Marker> markers = {};
   var emailTemp = "".obs;
+  var company = "".obs;
+  RxInt backColor = RxInt(0xFFFFFFFF);
+  RxInt fontColor = RxInt(0xFF000000);
+  RxBool isClicked = RxBool(false);
   void changeDropdownValue(String value) {
     registerSecurityQuestionValue.value = value;
+  }
+
+  void skillBoxColor() {
+    if (fontColor.value == 0xFF000000) {
+      backColor.value = 0xFF2A3CC5;
+      fontColor.value = 0xFFFFFFFF;
+    } else {
+      backColor.value = 0xFFFFFFFF;
+      fontColor.value = 0xFF000000;
+    }
   }
 
   void login(BuildContext context) async {
@@ -42,6 +63,9 @@ class AuthController extends GetxController {
       await prefs.setString(
           StorageConstants.user, jsonEncode(userInfo.user.toJson()));
       await prefs.setString(StorageConstants.token, userInfo.token);
+      await getService();
+      await getServiceList();
+      // await getAddressLatLng();
       refresh();
       CommonWidget.showInfo("Login Successfully!");
       if (userInfo.isFirst == false) {
@@ -121,6 +145,85 @@ class AuthController extends GetxController {
     }
     verifyCodeController.text = '';
     cleanInputs();
+  }
+
+  void getServiceFilter(String text) {
+    filteredServiceList.clear();
+    if (text.isEmpty) {
+      filteredServiceList.addAll(serviceList);
+    } else {
+      String searchText = text.toLowerCase();
+      for (int i = 0; i < serviceList.length; i++) {
+        if (serviceList[i]['servicesProvided']
+            .toLowerCase()
+            .contains(searchText)) {
+          print(i);
+          filteredServiceList.add(serviceList[i]);
+        }
+      }
+    }
+  }
+
+  Future<void> getAddressLatLng() async {
+    for (int i = 0; i < serviceList.length; i++) {
+      List<Location> locations =
+          await locationFromAddress(serviceList[i]['address']);
+      Location location = locations.first;
+      markers.add(
+        Marker(
+            markerId: MarkerId(serviceList[i]['name']),
+            position: LatLng(location.latitude, location.longitude),
+            infoWindow: InfoWindow(title: serviceList[i]['name'])),
+      );
+    }
+  }
+
+  Future<void> getService() async {
+    Map<String, dynamic> service = await apiRepository.getService();
+    await prefs.setString(StorageConstants.service, jsonEncode(service));
+  }
+
+  Future<void> getServiceList() async {
+    serviceList.value =
+        jsonDecode(prefs.getString(StorageConstants.service)!)['services'];
+    filteredServiceList.addAll(serviceList);
+  }
+
+  Future<void> getSkills(
+      String skill, String companyName, dynamic color) async {
+    isClicked.value = false;
+    if (company.value == companyName) {
+      if (skillsList.contains(skill) == false && color == 0xFFFFFFFF)
+        skillsList.add(skill);
+      else
+        skillsList.remove(skill);
+    } else {
+      company.value = companyName;
+      skillsList.clear();
+      skillsList.add(skill);
+    }
+  }
+
+  Future<void> postBid(String amount) async {
+    print(skillsList);
+    if (skillsList.isEmpty == false && amount != "") {
+      final bid = await apiRepository.postBid({
+        'service': company.value,
+        'content': skillsList.join(','),
+        'amount': amount
+      });
+      print(bid);
+      if (bid['msg'] == 'Transaction created successfully.') {
+        CommonWidget.showInfo('Transaction Success!');
+      } else {
+        CommonWidget.showError(bid['msg']);
+      }
+    } else if (skillsList.isEmpty) {
+      CommonWidget.showError('Please choose service.');
+    } else {
+      CommonWidget.showError('Please enter amount.');
+    }
+    skillsList.clear();
   }
 
   void cleanInputs() async {

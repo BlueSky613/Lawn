@@ -3,4 +3,5 @@ class StorageConstants {
   static final String token = 'token';
   static final String userInfo = 'userInfo';
   static final String userName = 'userName';
+  static final String service = 'service';
 }

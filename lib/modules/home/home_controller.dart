@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:lawnflutter/main_widget.dart';
 import 'package:lawnflutter/models/request/profile_request.dart';
-import 'package:lawnflutter/routes/routes.dart';
 import 'package:lawnflutter/api/api.dart';
 import 'package:lawnflutter/models/models.dart';
 import 'package:lawnflutter/shared/shared.dart';
@@ -22,7 +21,10 @@ class HomeController extends GetxController {
   TextEditingController ProfileZipController = TextEditingController();
   TextEditingController ProfilePhone1Controller = TextEditingController();
   TextEditingController ProfilePhone2Controller = TextEditingController();
+  
+
   HomeController({required this.apiRepository});
+
   final prefs = Get.find<SharedPreferences>();
   Future<User?> loadUser() async {
     String? jsonString = prefs.getString('user');
@@ -82,8 +84,6 @@ class HomeController extends GetxController {
         zip: ProfileZipController.text));
     await prefs.setString(StorageConstants.user, jsonEncode(profile!.toJson()));
   }
-
-  Future<void> getServiceFilter() async {}
 
   void cleanInputs() async {
     serviceSearchController.clear();

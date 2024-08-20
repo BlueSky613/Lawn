@@ -1,14 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:lawnflutter/component/service_box_widget.dart';
+import 'package:lawnflutter/modules/auth/auth_controller.dart';
 import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/theme/theme.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:lawnflutter/shared/constants/colors.dart';
 
 class MapScreen extends StatefulWidget {
@@ -18,62 +15,23 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController? _controller;
-  // final Completer<GoogleMapController> _controller =
-  //     Completer<GoogleMapController>();
-  late Position _currentPosition;
-  final Set<Marker> _markers = {};
   final controller = Get.find<HomeController>();
   late double latitude = 0;
   late double longitude = 0;
+  var authController = Get.find<AuthController>();
 
   static const CameraPosition _initialCameraPosition = CameraPosition(
     target: LatLng(40.7442419, -73.9886085),
     zoom: 14,
   );
-
-  Future<void> _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-    setState(() {
-      _currentPosition = position;
-      _markers.add(
-        Marker(
-          markerId: MarkerId('currentLocation'),
-          position: LatLng(position.latitude, position.longitude),
-          infoWindow: InfoWindow(title: 'My Location'),
-        ),
-      );
-
-      _controller?.animateCamera(
-        CameraUpdate.newLatLng(
-          LatLng(position.latitude, position.longitude),
-        ),
-      );
-    });
-  }
-
-  void getAddressLatLng(String address) async {
-    List<Location> locations = await locationFromAddress(address);
-    Location location = locations.first;
-    LatLng latLng = LatLng(location.latitude, location.longitude);
-
-    print('Latitude: ${latLng.latitude}, Longitude: ${latLng.longitude}');
-    setState(() {
-      latitude = latLng.latitude;
-      longitude = latLng.longitude;
-    });
-  }
-
+  
   @override
   void initState() {
     super.initState();
-    // _getCurrentLocation();
-    getAddressLatLng('230 Fifth Rooftop Bar, Broadway, New York, NY, USA');
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -86,13 +44,7 @@ class _MapScreenState extends State<MapScreen> {
               initialCameraPosition: _initialCameraPosition,
               myLocationEnabled: true,
               myLocationButtonEnabled: true,
-              markers: {
-                Marker(
-                  markerId: MarkerId('myLocation1'),
-                  position: LatLng(latitude, longitude),
-                  infoWindow: InfoWindow(title: 'My Location1'),
-                ),
-              },
+              markers: authController.markers,
               onMapCreated: (GoogleMapController controller) {
                 _controller = controller;
               },
@@ -143,7 +95,12 @@ class _MapScreenState extends State<MapScreen> {
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           border: InputBorder.none,
                           isDense: true),
-                      onChanged: (text) {},
+                      // onChanged: (text) {
+                      //   authController.getServiceFilter(text);
+                      // },
+                      onFieldSubmitted: (text) {
+                        authController.getServiceFilter(controller.serviceSearchController.text);
+                      },
                     ),
                   ),
                 ),
@@ -155,27 +112,15 @@ class _MapScreenState extends State<MapScreen> {
               child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 10,),
-                ServiceBox(
-                    companyName: "Good Company",
-                    ratings: 4.5,
-                    skills: ['Gardening', 'Cleaning']),
-                ServiceBox(
-                    companyName: "Good Company",
-                    ratings: 4.5,
-                    skills: ['Gardening', 'Cleaning']),
-                ServiceBox(
-                    companyName: "Good Company",
-                    ratings: 4.5,
-                    skills: ['Gardening', 'Cleaning']),
-                ServiceBox(
-                    companyName: "Good Company",
-                    ratings: 4.5,
-                    skills: ['Gardening', 'Cleaning']),
-                ServiceBox(
-                    companyName: "Good Company",
-                    ratings: 4.5,
-                    skills: ['Gardening', 'Cleaning']),
+                SizedBox(
+                  height: 10,
+                ),
+                ...authController.filteredServiceList.map((item) {
+                  return ServiceBox(
+                      companyName: item['name'],
+                      ratings: item['rating'],
+                      skills: item['servicesProvided'].split(","));
+                }).toList(),
               ],
             ),
           ))
