@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lawnflutter/main_widget.dart';
 import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/routes/routes.dart';
 import 'package:lawnflutter/api/api.dart';

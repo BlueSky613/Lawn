@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawnflutter/component/button_continue_widget.dart';
 import 'package:get/get.dart';
 import 'package:lawnflutter/routes/routes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreenWidget extends StatelessWidget {
   var controller = Get.find<HomeController>();

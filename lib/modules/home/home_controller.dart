@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
-import 'package:lawnflutter/main_widget.dart';
 import 'package:lawnflutter/models/request/profile_request.dart';
 import 'package:lawnflutter/api/api.dart';
 import 'package:lawnflutter/models/models.dart';
