@@ -15,7 +15,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  GoogleMapController? _controller;
+  GoogleMapController? placeController;
   final controller = Get.find<HomeController>();
   late double latitude = 0;
   late double longitude = 0;
@@ -52,7 +52,7 @@ class _MapScreenState extends State<MapScreen> {
               myLocationButtonEnabled: true,
               markers: authController.markers,
               onMapCreated: (GoogleMapController controller) {
-                _controller = controller;
+                placeController = controller;
               },
             ),
           ),
