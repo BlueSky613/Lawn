@@ -30,6 +30,7 @@ class AuthController extends GetxController {
   TextEditingController registerAnswerController = TextEditingController();
   TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
+  RxBool isLoading = false.obs;
 
   final HomeController homeController = Get.find<HomeController>();
 
@@ -58,7 +59,7 @@ class AuthController extends GetxController {
       await prefs.setString(StorageConstants.token, userInfo.token);
       await getService();
       await getServiceList();
-      // await getAddressLatLng();
+      await getAddressLatLng();
       homeController.mainName =
           userInfo.user.firstName + ' ' + userInfo.user.lastName;
       homeController.mainAddress1 = userInfo.user.address1;
@@ -80,6 +81,7 @@ class AuthController extends GetxController {
     } else {
       CommonWidget.showError("Please insert correctly.");
     }
+    isLoading.value = false;
     cleanInputs();
   }
 

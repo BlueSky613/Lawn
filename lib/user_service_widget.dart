@@ -123,7 +123,7 @@ class _MapScreenState extends State<MapScreen> {
                 ...authController.filteredServiceList.map((item) {
                   return ServiceBox(
                       companyName: item['name'],
-                      ratings: item['rating'],
+                      ratings: item['rating'].toDouble(),
                       skills: item['servicesProvided'].split(","));
                 }).toList(),
               ],

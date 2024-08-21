@@ -69,12 +69,18 @@ class _ServiceBoxState extends State<ServiceBox> {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  for (var skill in widget.skills)
-                    SkillBoxWidget(
-                        skill: skill, fontSize: 10, company: widget.companyName)
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    for (var skill in widget.skills)
+                      SkillBoxWidget(
+                          skill: skill,
+                          fontSize: 10,
+                          company: widget.companyName)
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

@@ -4,6 +4,7 @@ import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/shared/shared.dart';
 import 'package:lawnflutter/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:lawnflutter/routes/app_pages.dart';
 
 class ProfileScreenWidget extends GetView<HomeController> {
   final FocusScopeNode _node = FocusScopeNode();
@@ -19,7 +20,10 @@ class ProfileScreenWidget extends GetView<HomeController> {
       Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          toolbarHeight: 0,
+          leading: IconButton(
+          icon: Icon(Icons.arrow_back, size: 20, color: ColorConstants.white),
+          onPressed: () => Get.toNamed(Routes.MAIN)
+        ),
         ),
         body: SingleChildScrollView(
           child: FocusScope(
