@@ -8,9 +8,16 @@ import 'app_binding.dart';
 import 'di.dart';
 import 'routes/routes.dart';
 import 'theme/theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dotenv.load(fileName: ".env");
+    print('Env file loaded successfully');
+  } catch (e) {
+    print('Failed to load .env file: $e');
+  }
   await DenpendencyInjection.init();
   runApp(App());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_place/google_place.dart';
-import 'package:lawnflutter/api/api_constants.dart';
 import 'package:lawnflutter/modules/auth/auth_controller.dart';
 import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/theme/theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DropDownGooglePlaces extends StatefulWidget {
   @override
@@ -17,7 +17,6 @@ class DropDownGooglePlaces extends StatefulWidget {
 }
 
 class _DropDownGooglePlacesState extends State<DropDownGooglePlaces> {
-  GooglePlace googlePlace = GooglePlace(ApiConstants.googleApiKey);
   List<AutocompletePrediction> predictions = [];
   @override
   Widget build(BuildContext context) {
@@ -115,6 +114,8 @@ class _DropDownGooglePlacesState extends State<DropDownGooglePlaces> {
   }
 
   void autoCompleteSearch(String value) async {
+    String googleApiKey = dotenv.env['API_KEY'] ?? '';
+    GooglePlace googlePlace = GooglePlace(googleApiKey);
     var result = await googlePlace.autocomplete.get(value);
 
     if (result != null && result.predictions != null && mounted) {
