@@ -6,7 +6,6 @@ import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/routes/app_pages.dart';
 import 'package:lawnflutter/theme/theme.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
 import 'package:lawnflutter/shared/constants/colors.dart';
 
 class MapScreen extends StatefulWidget {
