@@ -37,4 +37,16 @@ class ApiProvider extends BaseProvider {
     return post(path, data,
         headers: {"Authorization": "${storage.getString('token')}"});
   }
+
+  Future<Response> sendForgotPwd(String path) {
+    return get(path);
+  }
+
+  Future<Response> postForgotPwd(String path, Map<String, dynamic> data) {
+    return post(path, data);
+  }
+
+  Future<Response> resetPwd(String path, Map<String, dynamic> data) {
+    return put(path, data);
+  }
 }

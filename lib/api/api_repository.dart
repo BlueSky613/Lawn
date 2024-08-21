@@ -52,4 +52,19 @@ class ApiRepository {
     final res = await apiProvider.postBid('/transaction/create', data);
     return res.body;
   }
+
+  Future<Map<String, dynamic>> sendForgotPwd(String email) async {
+    final res = await apiProvider.sendForgotPwd('/user/forgotpwd?email=$email');
+    return res.body;
+  }
+
+  Future<Map<String, dynamic>> postForgotPwd(Map<String, dynamic> data) async {
+    final res = await apiProvider.postForgotPwd('/user/forgotpwd', data);
+    return res.body;
+  }
+
+  Future<Map<String, dynamic>> resetPwd(Map<String, dynamic> data) async {
+    final res = await apiProvider.resetPwd('/user/forgotpwd', data);
+    return res.body;
+  }
 }

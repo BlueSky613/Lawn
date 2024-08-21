@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:lawnflutter/forgot_pwd_widget.dart';
 import 'package:lawnflutter/login_widget.dart';
 import 'package:lawnflutter/main_widget.dart';
 import 'package:lawnflutter/profile_widget.dart';
 import 'package:lawnflutter/register_widget.dart';
 import 'package:lawnflutter/modules/auth/auth.dart';
+import 'package:lawnflutter/reset_pwd_widget.dart';
 import 'package:lawnflutter/user_service_widget.dart';
 import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/verify_widget.dart';
@@ -36,6 +38,14 @@ class AppPages {
     GetPage(
         name: Routes.MAIN,
         binding: HomeBinding(),
-        page: () => MainScreenWidget())
+        page: () => MainScreenWidget()),
+    GetPage(
+        name: Routes.FORGORTPWD,
+        binding: AuthBinding(),
+        page: () => ForgotPWdWidget()),
+    GetPage(
+        name: Routes.RESETPWD,
+        binding: AuthBinding(),
+        page: () => ResetPwdWidget())
   ];
 }

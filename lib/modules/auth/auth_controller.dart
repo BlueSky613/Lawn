@@ -23,6 +23,9 @@ class AuthController extends GetxController {
   TextEditingController registerPhoneController = TextEditingController();
   TextEditingController verifyCodeController = TextEditingController();
   TextEditingController serviceAmountController = TextEditingController();
+  TextEditingController securityAnswerController = TextEditingController();
+  TextEditingController resetPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   RxList<dynamic> serviceList = RxList<dynamic>();
   RxList<dynamic> filteredServiceList = RxList<dynamic>();
   RxList<String> skillsList = RxList<String>();
@@ -31,16 +34,17 @@ class AuthController extends GetxController {
   TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
   RxBool isLoading = false.obs;
-
-  final HomeController homeController = Get.find<HomeController>();
-
   final prefs = Get.find<SharedPreferences>();
   Set<Marker> markers = {};
   var emailTemp = "".obs;
   var company = "".obs;
+  var forgotEmail = "";
+  var securityQuestion = "";
   RxInt backColor = RxInt(0xFFFFFFFF);
   RxInt fontColor = RxInt(0xFF000000);
   RxBool isClicked = RxBool(false);
+  final HomeController homeController = Get.find<HomeController>();
+
   void changeDropdownValue(String value) {
     registerSecurityQuestionValue.value = value;
   }
@@ -79,6 +83,7 @@ class AuthController extends GetxController {
       emailTemp.value = loginEmailController.text;
       receiveCode(context);
     } else {
+      forgotEmail = loginEmailController.text;
       CommonWidget.showError("Please insert correctly.");
     }
     isLoading.value = false;
@@ -214,6 +219,48 @@ class AuthController extends GetxController {
       CommonWidget.showError('Please enter amount.');
     }
     skillsList.clear();
+  }
+
+  Future<void> sendForgotPwd() async {
+    if (forgotEmail.isEmpty) forgotEmail = loginEmailController.text;
+    final res = await apiRepository.sendForgotPwd(forgotEmail);
+    if (res['msg'] == 'Please input the answer.') {
+      securityQuestion = res['securityQuestion'];
+      Get.toNamed(Routes.FORGORTPWD);
+    } else {
+      CommonWidget.showError(res['msg']);
+    }
+  }
+
+  Future<void> postForgotPwd() async {
+    final res = await apiRepository.postForgotPwd({
+      'email': forgotEmail,
+      'securityQuestion': securityQuestion,
+      'securityAnswer': securityAnswerController.text
+    });
+    if (res['msg'] == 'User can reset password.') {
+      Get.toNamed(Routes.RESETPWD);
+    } else {
+      CommonWidget.showError(res['msg']);
+    }
+    securityAnswerController.clear();
+  }
+
+  Future<void> resetPassword() async {
+    if (resetPasswordController.text == confirmPasswordController.text) {
+      final res = await apiRepository.resetPwd(
+          {'email': forgotEmail, 'password': resetPasswordController.text});
+      if (res['msg'] == 'Successfully reset password.') {
+        Get.toNamed(Routes.LOGIN);
+        forgotEmail = "";
+      } else {
+        CommonWidget.showError('Server error. Please wait.');
+      }
+    } else {
+      CommonWidget.showError('Check your password');
+    }
+    resetPasswordController.clear();
+    confirmPasswordController.clear();
   }
 
   void cleanInputs() async {
