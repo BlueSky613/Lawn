@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:lawnflutter/modules/auth/auth.dart';
 import 'package:lawnflutter/shared/shared.dart';
-import 'package:lawnflutter/routes/routes.dart';
 import 'package:lawnflutter/theme/theme.dart';
 import 'package:lawnflutter/component/button_continue_widget.dart';
 
