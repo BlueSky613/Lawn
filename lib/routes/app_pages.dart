@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:lawnflutter/login_widget.dart';
+import 'package:lawnflutter/main_widget.dart';
 import 'package:lawnflutter/profile_widget.dart';
 import 'package:lawnflutter/register_widget.dart';
 import 'package:lawnflutter/modules/auth/auth.dart';
@@ -22,10 +23,7 @@ class AppPages {
     ),
     GetPage(
         name: Routes.SERVICEPROVIDER,
-        bindings: [
-          HomeBinding(),
-          AuthBinding()
-        ],
+        bindings: [HomeBinding(), AuthBinding()],
         page: () => MapScreen()),
     GetPage(
         name: Routes.VERIFYCODE,
@@ -34,6 +32,10 @@ class AppPages {
     GetPage(
         name: Routes.PROFILE,
         binding: HomeBinding(),
-        page: () => ProfileScreenWidget())
+        page: () => ProfileScreenWidget()),
+    GetPage(
+        name: Routes.MAIN,
+        binding: HomeBinding(),
+        page: () => MainScreenWidget())
   ];
 }

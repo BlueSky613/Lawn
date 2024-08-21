@@ -1,32 +1,25 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/shared/shared.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawnflutter/component/button_continue_widget.dart';
 import 'package:get/get.dart';
 import 'package:lawnflutter/routes/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreenWidget extends StatelessWidget {
-  String? address1;
-  String? address2;
-  String? email;
-  String? phone1;
-  String? phone2;
-  String? name;
+  var controller = Get.find<HomeController>();
 
-  MainScreenWidget(
-      {this.name,
-      this.address1,
-      this.address2,
-      this.email,
-      this.phone1,
-      this.phone2});
+  MainScreenWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hello $name',
+        title: Text('Hello ${controller.mainName}',
             style: TextStyle(color: ColorConstants.white, fontSize: 20.sp)),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, size: 20, color: ColorConstants.white),
@@ -47,14 +40,19 @@ class MainScreenWidget extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
-            Text('Address1: $address1', style: TextStyle(fontSize: 20.sp)),
-            address2 != ""
-                ? Text('Address2: $address2', style: TextStyle(fontSize: 20.sp))
+            Text('Address1: ${controller.mainAddress1}',
+                textAlign: TextAlign.center, style: TextStyle(fontSize: 20.sp)),
+            controller.mainAddress2 != ""
+                ? Text('Address2: ${controller.mainAddress2}',
+                    style: TextStyle(fontSize: 20.sp))
                 : SizedBox(height: 0),
-            Text('Email: $email', style: TextStyle(fontSize: 20.sp)),
-            Text('Phone1: $phone1', style: TextStyle(fontSize: 20.sp)),
-            phone2 != ""
-                ? Text('Phone2: $phone2', style: TextStyle(fontSize: 20.sp))
+            Text('Email: ${controller.mainEmail}',
+                style: TextStyle(fontSize: 20.sp)),
+            Text('Phone1: ${controller.mainPhone1}',
+                style: TextStyle(fontSize: 20.sp)),
+            controller.mainPhone2 != ""
+                ? Text('Phone2: ${controller.mainPhone2}',
+                    style: TextStyle(fontSize: 20.sp))
                 : SizedBox(height: 0),
             SizedBox(
               height: 50,

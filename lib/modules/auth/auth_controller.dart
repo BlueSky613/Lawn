@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lawnflutter/main_widget.dart';
+import 'package:lawnflutter/modules/home/home.dart';
 import 'package:lawnflutter/routes/routes.dart';
 import 'package:lawnflutter/api/api.dart';
 import 'package:lawnflutter/models/models.dart';
@@ -30,6 +31,9 @@ class AuthController extends GetxController {
   TextEditingController registerAnswerController = TextEditingController();
   TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
+
+  final HomeController homeController = Get.find<HomeController>();
+
   final prefs = Get.find<SharedPreferences>();
   Set<Marker> markers = {};
   var emailTemp = "".obs;
@@ -39,16 +43,6 @@ class AuthController extends GetxController {
   RxBool isClicked = RxBool(false);
   void changeDropdownValue(String value) {
     registerSecurityQuestionValue.value = value;
-  }
-
-  void skillBoxColor() {
-    if (fontColor.value == 0xFF000000) {
-      backColor.value = 0xFF2A3CC5;
-      fontColor.value = 0xFFFFFFFF;
-    } else {
-      backColor.value = 0xFFFFFFFF;
-      fontColor.value = 0xFF000000;
-    }
   }
 
   void login(BuildContext context) async {
@@ -66,22 +60,17 @@ class AuthController extends GetxController {
       await getService();
       await getServiceList();
       // await getAddressLatLng();
+      homeController.mainName =
+          userInfo.user.firstName + ' ' + userInfo.user.lastName;
+      homeController.mainAddress1 = userInfo.user.address1;
+      homeController.mainAddress2 = userInfo.user.address2;
+      homeController.mainEmail = userInfo.user.email;
+      homeController.mainPhone1 = userInfo.user.phone1;
+      homeController.mainPhone2 = userInfo.user.phone2;
       refresh();
       CommonWidget.showInfo("Login Successfully!");
       if (userInfo.isFirst == false) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MainScreenWidget(
-              name: userInfo.user.firstName + ' ' + userInfo.user.lastName,
-              address1: userInfo.user.address1,
-              phone1: userInfo.user.phone1,
-              phone2: userInfo.user.phone2,
-              address2: userInfo.user.address2,
-              email: userInfo.user.email,
-            ),
-          ),
-        );
+        homeController.getMain(context);
       } else {
         Get.toNamed(Routes.PROFILE);
       }

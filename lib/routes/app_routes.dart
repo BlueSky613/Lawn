@@ -8,4 +8,5 @@ abstract class Routes {
   static const SERVICEPROVIDER = '/service';
   static const VERIFYCODE = '/verify-code';
   static const PROFILE = '/profile';
+  static const MAIN = '/main';
 }

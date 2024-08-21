@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lawnflutter/component/service_box_widget.dart';
 import 'package:lawnflutter/modules/auth/auth_controller.dart';
 import 'package:lawnflutter/modules/home/home.dart';
+import 'package:lawnflutter/routes/app_pages.dart';
 import 'package:lawnflutter/theme/theme.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
@@ -31,9 +32,14 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, size: 20, color: ColorConstants.white),
+          onPressed: () => Get.toNamed(Routes.MAIN)
+        ),
+      ),
       body: Column(
         children: [
           SizedBox(height: 10),

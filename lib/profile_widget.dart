@@ -503,7 +503,7 @@ class ProfileScreenWidget extends GetView<HomeController> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: InkWell(
                             onTap: () {
-                              controller.goMain(context);
+                              controller.getMain(context);
                             },
                             child: ButtonContinueWidget(
                                 labelButton: 'Contact Info'),

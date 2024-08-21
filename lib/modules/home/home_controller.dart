@@ -5,6 +5,7 @@ import 'package:lawnflutter/main_widget.dart';
 import 'package:lawnflutter/models/request/profile_request.dart';
 import 'package:lawnflutter/api/api.dart';
 import 'package:lawnflutter/models/models.dart';
+import 'package:lawnflutter/routes/app_pages.dart';
 import 'package:lawnflutter/shared/shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +22,12 @@ class HomeController extends GetxController {
   TextEditingController ProfileZipController = TextEditingController();
   TextEditingController ProfilePhone1Controller = TextEditingController();
   TextEditingController ProfilePhone2Controller = TextEditingController();
-  
+  String mainName = "";
+  String mainEmail = "";
+  String mainAddress1 = "";
+  String mainAddress2 = "";
+  String mainPhone1 = "";
+  String mainPhone2 = "";
 
   HomeController({required this.apiRepository});
 
@@ -53,21 +59,17 @@ class HomeController extends GetxController {
     }
   }
 
-  void goMain(BuildContext context) async {
-    User? profile = await loadUser();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MainScreenWidget(
-          name: profile!.firstName + ' ' + profile.lastName,
-          address1: profile.address1,
-          phone1: profile.phone1,
-          phone2: profile.phone2,
-          address2: profile.address2,
-          email: profile.email,
-        ),
-      ),
-    );
+  void getMain(BuildContext context) async {
+    User? userInfo = await loadUser();
+    if (userInfo != null) {
+      mainName = userInfo.firstName + ' ' + userInfo.lastName;
+      mainAddress1 = userInfo.address1;
+      mainPhone1 = userInfo.phone1;
+      mainPhone2 = userInfo.phone2;
+      mainAddress2 = userInfo.address2;
+      mainEmail = userInfo.email;
+      Get.toNamed(Routes.MAIN);
+    }
   }
 
   void editProfile(BuildContext context) async {
