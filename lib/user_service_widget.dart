@@ -22,7 +22,7 @@ class _MapScreenState extends State<MapScreen> {
 
   static const CameraPosition _initialCameraPosition = CameraPosition(
     target: LatLng(40.7442419, -73.9886085),
-    zoom: 14,
+    zoom: 12,
   );
   
   @override
