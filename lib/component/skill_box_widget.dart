@@ -28,7 +28,7 @@ class _SkillBoxWidgetState extends State<SkillBoxWidget> {
       child: Container(
         height: 20,
         constraints: BoxConstraints(
-          maxHeight: 40,
+          maxHeight: 45,
         ),
         decoration: BoxDecoration(
           color: Color(backColor),
