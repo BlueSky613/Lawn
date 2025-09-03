@@ -29,7 +29,7 @@ class _ForgotPWdWidgetState extends State<ForgotPWdWidget> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Forgot Password',
-              style: TextStyle(color: ColorConstants.white, fontSize: 20)),
+              style: TextStyle(color: ColorConstants.white, fontSize: 25)),
         ),
         body: SingleChildScrollView(
           child: Form(
