@@ -29,7 +29,7 @@ class _ServiceBoxState extends State<ServiceBox> {
     var controller = Get.find<AuthController>();
 
     return Card(
-        margin: EdgeInsets.only(bottom: 10.0),
+        margin: EdgeInsets.only(bottom: 15.0),
         color: Colors.grey.shade50,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
