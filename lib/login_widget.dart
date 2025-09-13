@@ -36,7 +36,7 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
               key: formKey,
               child: Obx(
                 () => Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 16, 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
