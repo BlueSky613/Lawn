@@ -21,7 +21,7 @@ class ProfileScreenWidget extends GetView<HomeController> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
-          icon: Icon(Icons.arrow_back, size: 25, color: ColorConstants.white),
+          icon: Icon(Icons.arrow_back, size: 20, color: ColorConstants.white),
           onPressed: () => Get.toNamed(Routes.MAIN)
         ),
         ),
