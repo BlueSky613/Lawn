@@ -39,7 +39,7 @@ class _ServiceBoxState extends State<ServiceBox> {
           ),
         ),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          padding: EdgeInsets.symmetric(horizontal: 35.0),
           child: Column(
             children: [
               Row(
