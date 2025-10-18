@@ -77,7 +77,7 @@ class _DropDownGooglePlacesState extends State<DropDownGooglePlaces> {
                     },
                     child: ListTile(
                       title: Text(option.description!,
-                          textScaleFactor: 1, style: ThemeConfig.bodyText1),
+                          textScaleFactor: 1, style: ThemeConfig.bodyText2),
                     ),
                   );
                 },
