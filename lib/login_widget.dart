@@ -46,7 +46,7 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
                         textAlign: TextAlign.start,
                         style: ThemeConfig.bodyText1.override(
                           color: Color(0xFF3C4858),
-                          fontSize: 28,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
