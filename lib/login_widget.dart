@@ -51,7 +51,7 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 65, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                         child: Text(
                           'Email',
                           textAlign: TextAlign.start,
