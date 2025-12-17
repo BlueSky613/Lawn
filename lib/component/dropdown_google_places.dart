@@ -98,7 +98,7 @@ class _DropDownGooglePlacesState extends State<DropDownGooglePlaces> {
               labelStyle: ThemeConfig.bodyText1.override(
                 color: Color(0xFFB4B4B4),
                 fontSize: 16,
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w400,
               ),
               border: OutlineInputBorder(),
               isDense: true,
