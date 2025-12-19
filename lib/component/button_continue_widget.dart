@@ -13,7 +13,7 @@ class ButtonContinueWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
       child: Container(
         height: 60,
         constraints: BoxConstraints(
