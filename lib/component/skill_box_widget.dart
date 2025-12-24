@@ -24,7 +24,7 @@ class _SkillBoxWidgetState extends State<SkillBoxWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.all(10),
+      padding: EdgeInsetsDirectional.all(12),
       child: Container(
         height: 20,
         constraints: BoxConstraints(
